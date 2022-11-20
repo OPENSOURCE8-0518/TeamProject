@@ -248,7 +248,7 @@ How to Connect Scrapy to your PostgreSQL database  :  https://nicolas-bourriez.m
 
 ---
 
-### <IGListKit>
+### IGListKit
 
 #### 설명
 
