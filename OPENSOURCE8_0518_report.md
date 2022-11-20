@@ -359,7 +359,7 @@ IGListKit구조 : https://leejigun.github.io/IGListKit
 
 
 
-### <BERT>
+### BERT
 
 #### 설명
 
@@ -375,7 +375,7 @@ IGListKit구조 : https://leejigun.github.io/IGListKit
 
 BERT에 입력되는 학습 데이터는 완성된 학습 데이터이므로 그 뒤에 단어를 예측하는 것이 아니라 중간에 어떤 단어를 가리고 (mask) 그것을 예측하기 위해 양방향으로 전체 문장을 분석하는 학습을 진행했다.
 
-![image-20221120151211068](C:\Users\wlasl\AppData\Roaming\Typora\typora-user-images\image-20221120151211068.png)
+![image](https://user-images.githubusercontent.com/117567297/202902730-3fb85e13-0920-45c7-9858-92e1b827377b.png)
 
 이렇게 BERT는 문장의 마지막 단어 예측이 아닌 중간의 단어를 예측하는 구조로 되어 있으며, 이를 Masked Langage Model(MLM)으로 부른다. 이것은 데이터에 대한 라벨링이 필요 없이 웹 상에 존재하는 각종 문장들을 긁어와서 학습 재료로 사용하여 저럼한 데이터 가공 비용으로 방대한 학습량을 달성할 수 있었다. 그 결과 자연어 처리 분야에 큰 성능 향상을 가져왔다.
 
@@ -403,7 +403,7 @@ BERT에 입력되는 학습 데이터는 완성된 학습 데이터이므로 그
 
 #### BERT의 구조
 
-![image-20221120151357321](C:\Users\wlasl\AppData\Roaming\Typora\typora-user-images\image-20221120151357321.png)
+![image](https://user-images.githubusercontent.com/117567297/202902793-1225c84d-df31-4f2d-a0e9-ed2981c6c138.png)
 
 * 문장을 토큰화 해서 전체 문장벡터를 만든다. 두 문장이 입력되고 문장 시작은 CLS, 문장 끝은 SEP라는 특수한 토큰을 표시한다.
 * 두 문장을 구분하는 Segment Embeddings를 만든다. (첫번째 문장 0, 두번째 문장 1)
@@ -416,7 +416,7 @@ BERT에 입력되는 학습 데이터는 완성된 학습 데이터이므로 그
 
 #### BERT의 문서 분류 수행 방법
 
-![image-20221120151719038](C:\Users\wlasl\AppData\Roaming\Typora\typora-user-images\image-20221120151719038.png)
+![image](https://user-images.githubusercontent.com/117567297/202902826-a68ee760-ab20-436f-a5dc-5927e3c265dc.png)
 
 BERT 모델이 빈칸 맞추기로 학습을 마친 상황. BERT는 트랜스포머의 인코더 블록(레이어)을 여러 개 쌓은 구조이다. 그림에서 확인할 수 있다시피 이 블록(레이어)의 입력과 출력은 단어 시퀀스이며, 블록(레이어) 내에서는 입력 단어(벡터)를 두 개씩 쌍을 지어 서로의 관계를 모두 고려하는 방식으로 계산된다.
 
@@ -434,7 +434,7 @@ BERT 모델이 빈칸 맞추기로 학습을 마친 상황. BERT는 트랜스포
 
 
 
-### <Bert-as-a-service>
+### Bert-as-a-service
 
 #### 설명
 
