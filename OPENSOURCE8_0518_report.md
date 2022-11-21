@@ -261,7 +261,7 @@ How to Connect Scrapy to your PostgreSQL database : https://nicolas-bourriez.med
 
 #### 설명 
 
-Leaning To Rank, LTR은 머신러닝으로 계산된 스코어를 기반으로 정렬하는 것을 의미한다. 색인된 인덱스 파일에서 유저 쿼리가 들어와 Similarity를 계산할 때 머신러닝 알고리즘으로 학습된 데이터를 기반으로 스코어를 계산하여 랭킹모델에  사용한다는 것이다. 즉 머신러닝을 스코어를 만드는 데 쓰는 알고리즘이다.  LTR은 이러한 Ranking System을 mac에 적용하여 Query와 Item의 연관성이 점수를 예측한다.
+Leaning To Rank, LTR은 머신러닝으로 계산된 스코어를 기반으로 정렬하는 것을 의미한다. 색인된 인덱스 파일에서 유저 쿼리가 들어와 Similarity를 계산할 때 머신러닝 알고리즘으로 학습된 데이터를 기반으로 스코어를 계산하여 랭킹모델 사용한다는 것이다. 즉 머신러닝을 스코어를 만드는 데 쓰는 알고리즘이다.  LTR은 이러한 Ranking System을 mac에 적용하여 Query와 Item의 연관성이 점수를 예측한다.
 
 주로 기존 검색 엔진들은 score 즉 정렬에 필요한 Similarity 알고리즘을 주로 TF-IDF 혹은 BM25 알고리즘에 의지하였다. 일반적으로 업채들도 검색엔진을 사용할 때 보통 이 알고리즘들에 기반하고 자신의 비즈니스 로직에 의한 가중치 값을 더 추가하여 서비스에 사용하였을 것이다. 
 
@@ -354,9 +354,6 @@ POST tmdb/_search
   }
 }
 ```
-
-
-
 
 
 #### 참조 
