@@ -243,6 +243,130 @@ How to Connect Scrapy to your PostgreSQL database  :  https://nicolas-bourriez.m
 
 대용량 데이터를 수집하기 위한 생산성있는 웹 크롤러의 구조  :  https://exmemory.tistory.com/81
 
+ 
+
+### LTR
+
+#### 설명 
+
+Leaning To Rank, LTR은 머신러닝으로 계산된 스코어를 기반으로 정렬하는 것을 의미한다. 색인된 인덱스 파일에서 유저 쿼리가 들어와 Similarity를 계산할 때 머신러닝 알고리즘으로 학습된 데이터를 기반으로 스코어를 계산하여 랭킹모델에  사용한다는 것이다. 즉 머신러닝을 스코어를 만드는 데 쓰는 알고리즘이다.  LTR은 이러한 Ranking System을 mac에 적용하여 Query와 Item의 연관성이 점수를 예측한다.
+
+주로 기존 검색 엔진들은 score 즉 정렬에 필요한 Similarity 알고리즘을 주로 TF-IDF 혹은 BM25 알고리즘에 의지하였다. 일반적으로 업채들도 검색엔진을 사용할 때 보통 이 알고리즘들에 기반하고 자신의 비즈니스 로직에 의한 가중치 값을 더 추가하여 서비스에 사용하였을 것이다. 
+
+##### Ex)
+
+구글 같은 웹페이지에서 검색 시 나오는 결과들을 연관성이 높은 순서로 정렬하는 것과 User의 특성에 따라 가장 User에게 알맞을 것 같은 Item을 추천 점수가 높은 순서대로 정렬하는 것. 
+
+
+
+#### LTR을 위한 모델
+
+LTR의 framework는 n개의 Query에 대해서 각 Item에 대한 m개의 feature가 있고 n개 Relevance score y (ex. user의 클릭수, 평점 등)이 있다. 이 학습 데이터로 모델 h를 만들어 테스트 데이터를 입력했을 때 relevance score를 예측한다. LTR에서 중요한 것은 '어떤 손실함수(Loss Function)를 활용해 모델을 학습하는가'인데,  Loss Function은 이러하다.
+
+
+
+####  Loss Funtion
+
+##### Point-wise : score를 머신러닝으로 생성
+
+한 개의 입력 데이터에 대해 예측된 y값과 ground truth y값에 대한 차이만 계산하는 방법.
+
+
+
+##### Pair-wise : 2개씩 비교하면 Order를 분류
+
+두개의 item을 비교해 어느 Item이 Query와 가장 유사한지 판단하는 방법이다. Point-wise 방법을 사용하기 위해서는 테스트 데이터에 대한 ground truth 값이 모두 절대적이어야 하는데 현실에서는 그러한 데이터를 찾기가 어렵다. 이에 대한 해결책으로 Pair-wise 방법은 두 Item 사이의 상대적인 Relevancy를 학습한다. 
+
+
+
+#####  List-wise : 전체 리스트를 한번에 분류
+
+해당 방법은 Pair를 넘어서  Item list에 대한 모든 Relevancy를 계산한다. Ranking metric을 최대화하는 방법이기에 가장 좋은 성능을 기대할 수 있다.  
+
+
+
+#### model의 생성
+
+1. 모델의 Feature정의 
+
+   검색 결과 및 대상의 따라 다르게 적용할 수 있다. 검색 대상이 공고와 같은 데이터라면 데이터의 단어의 빈도수,  본문 내용, 직종분류 등 만약 검색 대상이 사진이라면 픽셀 등으로 일반적인 머신러닝처럼 구성 가능하다. 
+
+2.  Log  데이터를 활용 
+
+    로그 데이터를 활용하여 Query에 대한 클릭 이벤트 같은 데이터로 모델 구성, 이후 검색 시 같은 쿼리에 대한 클릭에 대하여 모델링 적용.
+
+
+
+#### Search Example
+
+```  
+POST tmdb/_search
+{
+  "query": {
+      "sltr": {
+              "params": {
+                  "keywords": "rambo"
+              },
+              "model": "my_model", <- 모델 지정
+          }
+  }
+}
+```
+
+해당 Query는 model을 돌리면서 전체에 대한 계속적인 비교작업으로 효율이 떨어짐
+
+
+
+#### Rescore Top N
+
+```
+POST tmdb/_search
+{
+  "query": {
+      "match": {
+          "_all": "rambo"
+      }
+  },        
+  "rescore": {   # 결과값 도출 이후 상위 1000개의 대해서만 재정렬 진행
+      "window_size": 1000,
+      "query": {
+          "rescore_query": {
+              "sltr": {
+                  "params": {
+                      "keywords": "rambo"
+                  },
+                  "model": "my_model",
+              }
+          }
+      }
+  }
+}
+```
+
+
+
+
+
+#### 참조 
+
+https://github.com/o19s/elasticsearch-learning-to-rank
+
+https://elasticsearch-learning-to-rank.readthedocs.io/en/latest/logging-features.html
+
+http://4four.us/article/2009/10/what-is-learning-to-rank
+
+https://elasticsearch-learning-to-rank.readthedocs.io/en/latest/logging-features.html
+
+
+
+
+
+
+
+
+
+
+
 
 4. Data-Flow-Diagram
 
