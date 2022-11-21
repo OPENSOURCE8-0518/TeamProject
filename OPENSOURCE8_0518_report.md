@@ -14,6 +14,9 @@
    - 서비스 구조
 2. 유사 서비스 분석
 3. 사용된 오픈소스 소프트웨어
+4. Data-Flow-Diagram
+
+---
 
 ### Elastic Search
 
@@ -255,25 +258,14 @@ How to Connect Scrapy to your PostgreSQL database : https://nicolas-bourriez.med
 
 대용량 데이터를 수집하기 위한 생산성있는 웹 크롤러의 구조 : https://exmemory.tistory.com/81
 
-
-4. Data-Flow-Diagram
-
 ---
-
 
 ### <IGListKit>
 
-
-
 #### 설명
 
-
-
 IGListKit은 빠르고 유연한 목록을 작성하기 위한 데이터 중심 UICollectionView 프레임 워크이다. 
-
 IGListKit은 UICollectionView(여러 데이터를 관리하고 커스텀 할 수 있는 레이아웃을 사용해서 사용자에게 보여줄 수 있는 객체)에 표시할 개체의 배열을 제공해준다.
-
-
 
 #### 특징
 
@@ -293,8 +285,6 @@ extension User: ListDiffable {
   }
 }
 ```
-
-
 
 #### 구조
 
@@ -344,13 +334,9 @@ func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
 
 이것이 피드에 관심도 별로 글을 정렬하기 위해(상단으로) 필수적인 것이다. LTR에서 정보를 받아와 해당 프로토콜을 통해 사용자의 관심도에 따라 글의 우선순위를 정렬해준다. 글에 대한 추천수를 실시간으로 받을때마다 서버로부터 새로운 데이터를 전달받는다. 이를 충돌없이 구현하기 위한 기능이다.
 
-
-
 #### 참고
 
 diffing : https://instagram-engineering.com/open-sourcing-iglistkit-3d66f1e4e9aa
 
-
-
 IGListKit구조 : https://leejigun.github.io/IGListKit
-=======
+
