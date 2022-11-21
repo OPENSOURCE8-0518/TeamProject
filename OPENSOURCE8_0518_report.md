@@ -342,7 +342,7 @@ IGListKit구조 : https://leejigun.github.io/IGListKit
 
 구글에서 2018년 발표한 사전 훈련 언어 모델이다. 대량의 말뭉치를 사전 학습한 상태로 제공하기 때문에 사전 훈련 언어 모델이라고 한다. 압도적인 퍼포먼스로 단번에 NLP와 인공지능의 대표주자가 되었다.  
 
-* NLP (자연어 처리): 인간의 언어인 자연어를 기계에게 이해시키기 위한 방법들을 일컬어 자연어 처리, NLP라고 부르고 있다.
+\* NLP (자연어 처리): 인간의 언어인 자연어를 기계에게 이해시키기 위한 방법들을 일컬어 자연어 처리, NLP라고 부르고 있다.
 
 #### BERT의 데이터 학습 방법
 
@@ -350,9 +350,11 @@ IGListKit구조 : https://leejigun.github.io/IGListKit
    그러나 BERT는 단방향으로만 예측하는 것은 그 문맥을 이해하는데 한계가 있다고 생각하여 예측해야 할 단어의 왼쪽 뿐만 아니라 미래에 나올 오른쪽 단어들에 대해서도 양방향으로 한꺼번에 학습을 하여 더 좋은 성능을 냈다.
    BERT에 입력되는 학습 데이터는 완성된 학습 데이터이므로 그 뒤에 단어를 예측하는 것이 아니라 중간에 어떤 단어를 가리고 (mask) 그것을 예측하기 위해 양방향으로 전체 문장을 분석하는 학습을 진행했다.
 
-   ![image](https://user-images.githubusercontent.com/117567297/203064177-87f01d3f-76fb-416b-9ac1-e6b8939ad9ff.png)
+   ![image](https://user-images.githubusercontent.com/117567297/203068166-42e1c9a1-5c4d-4668-9094-cee863a01d5b.png)
 
    이렇게 BERT는 문장의 마지막 단어 예측이 아닌 중간의 단어를 예측하는 구조로 되어 있으며, 이를 Masked Langage Model(MLM)으로 부른다. 이것은 데이터에 대한 라벨링이 필요 없이 웹 상에 존재하는 각종 문장들을 긁어와서 학습 재료로 사용하여 저럼한 데이터 가공 비용으로 방대한 학습량을 달성할 수 있었다. 그 결과 자연어 처리 분야에 큰 성능 향상을 가져왔다.
+
+   
 
 2. BERT는 두 문장을 입력할 수 있는 구조로 만들어졌다. 두 문장을 분석하여 연속된 문장인지 아닌지 학습하는 장치가 있다. (NSP: Next Sentence Predicion)
 
@@ -374,7 +376,7 @@ IGListKit구조 : https://leejigun.github.io/IGListKit
 
 #### BERT의 구조
 
-![image](https://user-images.githubusercontent.com/117567297/203064476-021eed6d-77c6-485e-a09e-3c5fa87c55a2.png)
+![image](https://user-images.githubusercontent.com/117567297/203068103-9ba99009-8807-4917-8a1a-951571bac6ce.png)
 
 - 문장을 토큰화 해서 전체 문장벡터를 만든다. 두 문장이 입력되고 문장 시작은 CLS, 문장 끝은 SEP라는 특수한 토큰을 표시한다.
 
@@ -392,7 +394,7 @@ IGListKit구조 : https://leejigun.github.io/IGListKit
 
 #### BERT의 문서 분류 수행 방법
 
-![image](https://user-images.githubusercontent.com/117567297/203064570-2a62cda5-1c3b-4d96-a643-c4d8a2e2af87.png)
+![image](https://user-images.githubusercontent.com/117567297/203068272-678528ec-9835-4a0c-897b-c7feae4de19a.png)
 
 [BERT 모델이 빈칸 맞추기로 학습을 마친 상황] BERT는 트랜스포머의 인코더 블록(레이어)을 여러 개 쌓은 구조이다. 그림에서 확인할 수 있다시피 이 블록(레이어)의 입력과 출력은 단어 시퀀스이며, 블록(레이어) 내에서는 입력 단어(벡터)를 두 개씩 쌍을 지어 서로의 관계를 모두 고려하는 방식으로 계산된다.
 단어 단위로 토큰화한 뒤, 앞뒤에 문장 시작과 끝을 알리는 스페셜 토큰(CLS, SEP)를 추가한 뒤 BERT에 입력한다. BERT 모델의 마지막 레이어의 출력에서 CLS에 해당하는 벡터를 추출한다. 트랜스포머 인코더 블록에서는 모든 단어가 서로 영향을 끼치기 때문에 마지막 블록 CLS 벡터는 문장 전체(이 영화 재미없네요)의 의미가 벡터 하나로 응집된 것이라고 할 수 있다. 이렇게 뽑은 CLS 벡터에 작은 모듈을 하나 추가해, 그 출력이 미리 정해놓은 범주(우리 조의 경우 컴퓨터공학부 관련 키워드)가 될 확률이 되도록 한다. 학습 과정에서는 BERT와 그 위에 쌓은 작은 모듈을 포함한 전체 모델의 출력이 정답 레이블과 최대한 같아지도록 모델 전체를 업데이트한다. 이것이 파인튜닝(fine-tuning)이다.
@@ -434,10 +436,15 @@ bert-as-service를 설치하는 가장 좋은 방법은 pip을 이용하는 것�
 #### 참고
 
 [Github]-BERT 설명문서 : https://github.com/KPFBERT/kpfbert/blob/main/BERT-MediaNavi.pdf
+
 위 문서의 유튜브 : https://www.youtube.com/watch?v=Pj6563CAnKs&t=832s
+
 NLP 기술 : https://wannabenice.tistory.com/33
+
 BERT 자료 : https://ratsgo.github.io/nlpbook/docs/language_model/tutorial/ , https://happy-obok.tistory.com/23
+
 Bert-as-service 자료 : https://blog.naver.com/dmswldla91/222167659381 , https://blog.naver.com/dmswldla91/222167659381
+
 [Github]-bert-as-service / README.md : https://github.com/hansonrobotics/bert-as-service/blob/master/README.md
 
 ---
