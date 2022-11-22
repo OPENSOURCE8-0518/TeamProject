@@ -20,10 +20,8 @@
    - Bert
    - KoNLPy
 4. DFD(Data-Flow-Diagram)
----
 
 ### Elastic Search
-
 
 #### 설명
 
@@ -141,7 +139,6 @@ Datastream - 새로운 Elasticsearch 데이터 구조 이해하기 : https://you
 
 #### 설명
 
-
 Scrapy는 웹 사이트를 돌아다니면서 구조화된 데이터를 추출하기 위해 파이썬으로 작성한 오픈소스 프레임워크이다.
 
 추출한 데이터를 데이터 마이닝, 정보 처리, 이력 기록 등 일련의 유용한 애플리케이션에 활용할 수 있다.
@@ -150,9 +147,7 @@ XPath, CSS 표현식으로 HTML 소스에서 데이터 추출이 가능하고 �
 
 #### (Crawling)크롤링 이란
 
-
 웹에는 수억개의 웹페이지가 있으며, 대부분의 페이지들은 수많은 정보를 가지고 있다.
-
 최근 빅데이터가 대두되면서 이전에 작성되었던 페이지에서 유의미한 정보를 도출하기 위한 여러 가지 방법들이 논의되고 있는데 이를 Scraping 혹은 Crawling이라고 한다.
 
 #### 입출력데이터의 형식
@@ -190,7 +185,6 @@ Scrapy의 아키텍처 구조에는 수집 주기를 설정하는 Scheduler가 �
 
 4. Downloader
 
-
 http, ftp 프로토콜을 해석하여 웹에 있는 데이터를 다운로드하는 역할을 담당한다.
 
 #### 설치 및 실행 방법
@@ -201,7 +195,6 @@ pip가 설치되어 있는 쉘에서 아래와 같은 명령어를 입력하여 
 $ pip install scrapy
 
 ##### 프로젝트 생성 및 프로젝트 구조
-
 
 scrapy라는 명령어를 통해 프로젝트를 생성하거나, 작성된 프로젝트를 실행할 수 있다.
 
@@ -265,20 +258,12 @@ How to Connect Scrapy to your PostgreSQL database : https://nicolas-bourriez.med
 
 ---
 
-
 ### IGListKit
-
-
 
 #### 설명
 
-
-
 IGListKit은 빠르고 유연한 목록을 작성하기 위한 데이터 중심 UICollectionView 프레임 워크이다. 
-
 IGListKit은 UICollectionView(여러 데이터를 관리하고 커스텀 할 수 있는 레이아웃을 사용해서 사용자에게 보여줄 수 있는 객체)에 표시할 개체의 배열을 제공해준다.
-
-
 
 #### 특징
 
@@ -298,8 +283,6 @@ extension User: ListDiffable {
   }
 }
 ```
-
-
 
 #### 구조
 
@@ -349,17 +332,11 @@ func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
 
 이것이 피드에 관심도 별로 글을 정렬하기 위해(상단으로) 필수적인 것이다. LTR에서 정보를 받아와 해당 프로토콜을 통해 사용자의 관심도에 따라 글의 우선순위를 정렬해준다. 글에 대한 추천수를 실시간으로 받을때마다 서버로부터 새로운 데이터를 전달받는다. 이를 충돌없이 구현하기 위한 기능이다.
 
-
-
 #### 참고
 
 diffing : https://instagram-engineering.com/open-sourcing-iglistkit-3d66f1e4e9aa
 
-
-
 IGListKit구조 : https://leejigun.github.io/IGListKit
-
----
 
 ### KoNLPy
 
@@ -380,7 +357,6 @@ ex) 가방에 들어가신다 -> 가방/NNG + 에/JKM + 들어가/VV + 시/EPH +
 
 ##### 문장 분석, 추출
  품사 태깅 기능을 통해 분석된 문장에서 원하는 요소만을 추출할 수 있다. 예를 들어, "유일하게 항공기 체계 종합개발 경험을 갖고 있는 KAI는." 이라는 문장에서 명사만 추출하게 되면 '항공기', '체계', '종합', '개발', '경험' 만 추출해낸다.
-
 
 #### 성능 분석
  각 클래스가 작동하는 방식이 다른 만큼 성능상에도 차이가 존재하는데, 응용할 프로그램의 특성에 맞춰 가장 적절한 것을 고르는 것이 좋다. 
@@ -414,3 +390,4 @@ https://konlpy.org/ko/latest/# - KoNLPy: 파이썬 한국어 NLP
 https://github.com/konlpy/konlpy - 깃허브 KoNLPy 패키지
 https://datascienceschool.net/03%20machine%20learning/03.01.02%20KoNLPy%20%ED%95%9C%EA%B5%AD%EC%96%B4%20%EC%B2%98%EB%A6%AC%20%ED%8C%A8%ED%82%A4%EC%A7%80.html - 데이터 사이언스 스쿨 KoNLPy 한국어 처리 패키지
 https://github.com/open-korean-text/open-korean-text - 깃허브 Okt 태거 클래스
+
