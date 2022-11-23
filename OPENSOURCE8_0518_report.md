@@ -20,6 +20,7 @@
    - IGListKit
    - Bert
    - KoNLPy
+   - Laravel 5 Friendships
 4. DFD(Data-Flow-Diagram)
 
 ### Elastic Search
@@ -502,4 +503,53 @@ https://konlpy.org/ko/latest/# - KoNLPy: 파이썬 한국어 NLP
 https://github.com/konlpy/konlpy - 깃허브 KoNLPy 패키지
 https://datascienceschool.net/03%20machine%20learning/03.01.02%20KoNLPy%20%ED%95%9C%EA%B5%AD%EC%96%B4%20%EC%B2%98%EB%A6%AC%20%ED%8C%A8%ED%82%A4%EC%A7%80.html - 데이터 사이언스 스쿨 KoNLPy 한국어 처리 패키지
 https://github.com/open-korean-text/open-korean-text - 깃허브 Okt 태거 클래스
+
+### Laravel 5 Friendships
+
+#### 개요
+Laravel 5 Friendships 는 MIT 라이센스를 사용하는 오픈소스로, 친구 추가 기능을 쉽게 구현할 수 있는 프레임을 제공합니다. 
+
+#### 제공하는 기능
+Send Friend Requests ( 친구 요청 보내기 )
+Accept Friend Requests ( 친구 요청 수락 )
+Deny Friend Requests ( 친구 요청 거부 )
+Delete Friend ( 친구 삭제 )
+
+#### 모델 설정 및 사용 방법
+
+##### 모델 설정
+```
+use Merodiro\Friendships\Friendable;
+class User extends Model
+{
+    use Friendable;
+    ...
+}
+```
+##### 친구 요청 보내기
+```
+$user->addFriend($recipient);
+```
+##### 친구 요청 수락
+```
+$user->acceptFriend($sender);
+```
+##### 친구 요청 거부하기
+```
+$user->deleteFriend($sender);
+```
+##### 친구 제거
+```
+$user->deleteFriend($friend);
+```
+##### 함께 아는 친구
+```
+$user->mutualFriends($anotherUser);
+```
+##### 두 사용자 간의 현재 관계 확인
+```
+$user->checkFriendship($anotherUser);
+```
+
+
 
