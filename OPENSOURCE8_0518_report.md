@@ -14,9 +14,13 @@
    - 서비스 구조
 2. 유사 서비스 분석
 3. 사용된 오픈소스 소프트웨어
-4. Data-Flow-Diagram
-
----
+   - Elastic Search
+   - Scrapy
+   - LTR
+   - IGListKit
+   - Bert
+   - KoNLPy
+4. DFD(Data-Flow-Diagram)
 
 ### Elastic Search
 
@@ -129,6 +133,9 @@ Datastream - 새로운 Elasticsearch 데이터 구조 이해하기 : https://you
 
 깃허브 주소 : https://github.com/elastic/elasticsearch
 
+
+---
+
 ### Scrapy
 
 #### 설명
@@ -142,7 +149,6 @@ XPath, CSS 표현식으로 HTML 소스에서 데이터 추출이 가능하고 �
 #### (Crawling)크롤링 이란
 
 웹에는 수억개의 웹페이지가 있으며, 대부분의 페이지들은 수많은 정보를 가지고 있다.
-
 최근 빅데이터가 대두되면서 이전에 작성되었던 페이지에서 유의미한 정보를 도출하기 위한 여러 가지 방법들이 논의되고 있는데 이를 Scraping 혹은 Crawling이라고 한다.
 
 #### 입출력데이터의 형식
@@ -252,7 +258,118 @@ How to Connect Scrapy to your PostgreSQL database : https://nicolas-bourriez.med
 
 ---
 
-### <IGListKit>
+### LTR
+
+#### 설명 
+
+Leaning To Rank, LTR은 머신러닝으로 계산된 스코어를 기반으로 정렬하는 것을 의미한다. 색인된 인덱스 파일에서 유저 쿼리가 들어와 Similarity를 계산할 때 머신러닝 알고리즘으로 학습된 데이터를 기반으로 스코어를 계산하여 랭킹모델에 사용한다는 것이다. 즉 머신러닝을 스코어를 만드는 데 쓰는 알고리즘이다.  LTR은 이러한 Ranking System을 mac에 적용하여 Query와 Item의 연관성이 점수를 예측한다.
+
+주로 기존 검색 엔진들은 score 즉 정렬에 필요한 Similarity 알고리즘을 주로 TF-IDF 혹은 BM25 알고리즘에 의지하였다. 일반적으로 업채들도 검색엔진을 사용할 때 보통 이 알고리즘들에 기반하고 자신의 비즈니스 로직에 의한 가중치 값을 더 추가하여 서비스에 사용하였을 것이다. 
+
+##### Ex)
+
+구글 같은 웹페이지에서 검색 시 나오는 결과들을 연관성이 높은 순서로 정렬하는 것과 User의 특성에 따라 가장 User에게 알맞을 것 같은 Item을 추천 점수가 높은 순서대로 정렬하는 것. 
+
+
+
+#### LTR을 위한 모델
+
+LTR의 framework는 n개의 Query에 대해서 각 Item에 대한 m개의 feature가 있고 n개 Relevance score y (ex. user의 클릭수, 평점 등)이 있다. 이 학습 데이터로 모델 h를 만들어 테스트 데이터를 입력했을 때 relevance score를 예측한다. LTR에서 중요한 것은 '어떤 손실함수(Loss Function)를 활용해 모델을 학습하는가'인데,  Loss Function은 이러하다.
+
+
+
+####  Loss Funtion
+
+##### Point-wise : score를 머신러닝으로 생성
+
+한 개의 입력 데이터에 대해 예측된 y값과 ground truth y값에 대한 차이만 계산하는 방법.
+
+
+
+##### Pair-wise : 2개씩 비교하면 Order를 분류
+
+두개의 item을 비교해 어느 Item이 Query와 가장 유사한지 판단하는 방법이다. Point-wise 방법을 사용하기 위해서는 테스트 데이터에 대한 ground truth 값이 모두 절대적이어야 하는데 현실에서는 그러한 데이터를 찾기가 어렵다. 이에 대한 해결책으로 Pair-wise 방법은 두 Item 사이의 상대적인 Relevancy를 학습한다. 
+
+
+
+#####  List-wise : 전체 리스트를 한번에 분류
+
+해당 방법은 Pair를 넘어서  Item list에 대한 모든 Relevancy를 계산한다. Ranking metric을 최대화하는 방법이기에 가장 좋은 성능을 기대할 수 있다.  
+
+
+
+#### model의 생성
+
+1. 모델의 Feature정의 
+
+   검색 결과 및 대상의 따라 다르게 적용할 수 있다. 검색 대상이 공고와 같은 데이터라면 데이터의 단어의 빈도수,  본문 내용, 직종분류 등 만약 검색 대상이 사진이라면 픽셀 등으로 일반적인 머신러닝처럼 구성 가능하다. 
+
+2.  Log  데이터를 활용 
+
+    로그 데이터를 활용하여 Query에 대한 클릭 이벤트 같은 데이터로 모델 구성, 이후 검색 시 같은 쿼리에 대한 클릭에 대하여 모델링 적용.
+
+
+
+#### Search Example
+
+```  
+POST tmdb/_search
+{
+  "query": {
+      "sltr": {
+              "params": {
+                  "keywords": "rambo"
+              },
+              "model": "my_model", <- 모델 지정
+          }
+  }
+}
+```
+
+해당 Query는 model을 돌리면서 전체에 대한 계속적인 비교작업으로 효율이 떨어짐
+
+
+
+#### Rescore Top N
+
+```
+POST tmdb/_search
+{
+  "query": {
+      "match": {
+          "_all": "rambo"
+      }
+  },        
+  "rescore": {   # 결과값 도출 이후 상위 1000개의 대해서만 재정렬 진행
+      "window_size": 1000,
+      "query": {
+          "rescore_query": {
+              "sltr": {
+                  "params": {
+                      "keywords": "rambo"
+                  },
+                  "model": "my_model",
+              }
+          }
+      }
+  }
+}
+```
+
+
+#### 참조 
+
+https://github.com/o19s/elasticsearch-learning-to-rank
+
+https://elasticsearch-learning-to-rank.readthedocs.io/en/latest/logging-features.html
+
+http://4four.us/article/2009/10/what-is-learning-to-rank
+
+https://elasticsearch-learning-to-rank.readthedocs.io/en/latest/logging-features.html
+
+---
+
+### IGListKit
 
 #### 설명
 
@@ -332,9 +449,8 @@ diffing : https://instagram-engineering.com/open-sourcing-iglistkit-3d66f1e4e9aa
 
 IGListKit구조 : https://leejigun.github.io/IGListKit
 
+
 ---
-
-
 
 ### BERT
 
@@ -448,4 +564,58 @@ Bert-as-service 자료 : https://blog.naver.com/dmswldla91/222167659381 , https:
 [Github]-bert-as-service / README.md : https://github.com/hansonrobotics/bert-as-service/blob/master/README.md
 
 ---
+
+### KoNLPy
+
+#### 개요
+ Natural Language Processing(자연어 처리)는 텍스트에서 의미있는 정보를 분석, 추출하고 이해하는 일련의 기술을 의미한다. 이미 다양한 분야에서 사용되는 기술이며, 텍스트 요약, 대화 시스템(Siri, Bixby 등), 기계 번역 등에 사용되고 있다.
+ 그 중 KoNLPy는 한국어 텍스트의 정보 처리를 위한 파이썬 패키지이다.
+
+#### 라이선스 정보
+ GPL v3 혹은 그 이상.
+
+#### 기능
+
+##### 품사 태깅
+ 형태소 분석은 형태소를 비롯하여, 어근, 접두사/접미사, 품사(POS, part-of-speech) 등 다양한 언어적 속성의 구조를 파악하는 것이다. 품사 태깅은 이렇게 분석된 형태소의 뜻과 문맥을 고려해 그것에 각각 마크업을 하는 일이다.
+ex) 가방에 들어가신다 -> 가방/NNG + 에/JKM + 들어가/VV + 시/EPH + ㄴ다/EFN
+ KoNLPy에는 품사 태깅을 위한 여러 옵션이 존재하는데, 이들은 모두 문구를 입력받아 태깅된 형태소를 출력하는 동일한 입출력 구조를 지닌다. (어떤 옵션을 사용하더라도 입출력 데이터는 변하지 않는다는 뜻)
+ 이 옵션은 다양한 품사 태깅 클래스인데, 각 태거들은 모두 제각기 다른 기준에 따라 형태소를 분석하고 다른 태그를 부착한다. Kkma, Komoran, Hannanum, Okt, Mecab 의 5개 클래스가 존재하며, 이 중 필요한 것을 사용하면 된다.
+
+##### 문장 분석, 추출
+ 품사 태깅 기능을 통해 분석된 문장에서 원하는 요소만을 추출할 수 있다. 예를 들어, "유일하게 항공기 체계 종합개발 경험을 갖고 있는 KAI는." 이라는 문장에서 명사만 추출하게 되면 '항공기', '체계', '종합', '개발', '경험' 만 추출해낸다.
+
+#### 성능 분석
+ 각 클래스가 작동하는 방식이 다른 만큼 성능상에도 차이가 존재하는데, 응용할 프로그램의 특성에 맞춰 가장 적절한 것을 고르는 것이 좋다. 
+ Kkma의 경우, 문장의 요소 하나하나를 분석하는 능력은 뛰어나지만, 띄어쓰기 알고리즘이 약해 ‘아버지가방에’ 등의 문장을 제대로 분석하지 못하며, 또한 ‘아이폰’을 ‘아이’와 ‘폰’으로 인식하는 등 신조어, 줄임말, 은어 등 사전에 포함되지 않은 단어를 잘 처리하지 못하는 모습을 보인다.
+ Mecab의 경우, 뛰어난 띄어쓰기 알고리즘을 보유하고 있어 띄어쓰기가 되지 않은 문장을 가장 잘 분석하며 사전에 포함되지 않은 단어도 어느정도 정확하게 처리해내고, 클래스 로딩과 문서 처리 시간이 다른 클래스에 비해 10배 이상 빠른 모습을 보인다. (로딩 시간 0.0007sec, 실행 시간 0.2838sec. 문서 처리의 경우 10만 문자의 문서.) 그러나 문맥에 따라 분석하는 능력이 떨어져 ‘하늘을 나는 자동차’ 등의 문장에서 ‘나는’을 대명사 ‘나’에 보조사‘는’이 붙은 것으로 해석했다. 또한 window에서 사용이 지원되지 않는다.
+ Okt의 경우 다른 부분은 그리 특출나지는 않지만, 그렇다고 아주 떨어지지도 않으며, 기존에 트위터에 사용되었던 패키지이기 때문에, 사전에 존재하지 않는 단어를 처리하는 능력이 아주 뛰어나다. 또한 로딩과 처리 속도 역시 빠른 편으로, 각각 1.5초, 2.5초가 소요되었다.
+
+ 목적으로 하는 시스템이 커뮤니티이므로, 커뮤니티의 다양한 신조어와 맞춤법 오류에도 뛰어난 정확성을 보이는 Okt가 가장 적절할 것으로 판단된다.
+
+#### 사용
+ KoNLPy는 파이썬 패키지이므로, 파이썬이 설치되어 있어야 한다. 우분투, CentOS, 맥, 윈도우, 도커 OS를 지원하며 파이썬 패키지 설치 명령어 ($ pip ~)를 통해 설치할 수 있다. 이후 사용할 태거 클래스와 모듈을 import하는 것으로 바로 사용할 수 있다.
+
+ ex)
+ <code>
+ from konlpy.tag import Okt
+ okt = Okt() # Open Korean Text(Okt) 클래스 객체 생성
+
+ okt.morphs(u'분석할 문장')
+ #-> 문장을 형태소 단위로 분해해 리스트로 반환 
+
+ okt.nouns(u'분석할 문장')
+ #-> 문장의 명사만 리스트 형태로 반환
+ </code>
+
+##### 데이터 입/출력
+ KoNLPy는 JSON 파일과 txt 파일을 받아 사용할 수 있다. (패키지 내부 utils 모듈의 read_json(), read_txt() 매서드를 사용해 해당 확장자의 파일을 사용할 수 있다.) 이 파일에서 내용을 읽어와 사용할 태거 클래스의 매서드를 이용해 원하는 방식으로 분석/추출하면 된다. 분석/추출된 텍스트는 문자열 리스트의 형태로 반환되며 이 중 필요한 것만 골라 반환하도록 할 수 있다.
+ 반환된 문자열을 다시 파일로 저장해 내보내거나, 딕셔너리의 형태로 가공해 코드 내부에서 바로 이용할 수도 있을 것이다.
+
+#### 참조
+https://konlpy.org/ko/latest/# - KoNLPy: 파이썬 한국어 NLP
+https://github.com/konlpy/konlpy - 깃허브 KoNLPy 패키지
+https://datascienceschool.net/03%20machine%20learning/03.01.02%20KoNLPy%20%ED%95%9C%EA%B5%AD%EC%96%B4%20%EC%B2%98%EB%A6%AC%20%ED%8C%A8%ED%82%A4%EC%A7%80.html - 데이터 사이언스 스쿨 KoNLPy 한국어 처리 패키지
+https://github.com/open-korean-text/open-korean-text - 깃허브 Okt 태거 클래스
+
 
