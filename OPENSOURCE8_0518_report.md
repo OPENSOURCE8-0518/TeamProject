@@ -155,6 +155,9 @@ XPath, CSS 표현식으로 HTML 소스에서 데이터 추출이 가능하고 �
 
 Scrapy는 웹 페이지에 있는 텍스트나 이미지 등 다양한 형태의 데이터들을 크롤링 할 수 있고 이 플랫폼에서는 주로 텍스트 형식의 데이터를 입출력한다.
 
+#### 라이선스 정보
+BSD License
+
 #### 특징
 
 1. Python 기반의 프레임워크로 쉬운 설정이 가능하다.
@@ -205,7 +208,8 @@ $ scrapy startproject project명
 
 크롤링해오는 데이터를 class로 받아오는 파일로 가지고 올 element를 작성한다.
 
-ex)
+item.py 작성 예시
+```
 import scrapy
 from scrapy.item import ITem, Field
 class APT2UItem(scrapy.Item):
@@ -214,6 +218,7 @@ depname=scrapy.Field() //단과대 element
 trackname=scrapy.Field() //트랙명 element
 trackcontent=scrapy.Field() //트랙의 설명 element
 
+```
 ##### spider.py
 
 데이터 수집 절차에 대한 수행 코드를 정의하는 파일로 해당 웹페이지에서 추출하고자 하는 정보들의 위치와 정보의 구조를 파악한다.
@@ -235,12 +240,13 @@ DB로 저장하기 위해서 크롤링의 결과를 저장할 Table을 생성해
 Scrapy 프로젝트 명 변경 ex) scrapy crawl APT2U_DB
 
 "hs" Table 생성 스크립트 예시
+```
 CREATE TABLE `hs` (
-
 `depname` varchar(200) DEFAULT NULL,
 `trackname` varchar(200) DEFAULT NULL,
 `trackcontent` varchar(500) DEFAULT NULL,
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+```
 
 #### 참고
 
