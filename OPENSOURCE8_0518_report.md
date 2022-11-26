@@ -57,7 +57,6 @@ Elastic Search는 정형 데이터와 비정형 데이터를 모두 받아 들�
 5. 실시간성  
    데이터 분석이 실시간으로 이루어지며 사용자가 원하는 결과를 바로바로 보여줄 수 있다.
 
-
 #### 관계형 데이터 베이스를 계속 쓰는 이유
 
 Elastic Search는 관계형 데이터 베이스가 아니기 때문에 완전한 대체는 할 수 없다.  
@@ -144,6 +143,7 @@ Elastic License 2.0은 Elasticsearch와 Kibana의 모든 무료 및 유료 기�
 - 라이선스 키 기능을 우회하거나 라이선스 키로 보호되는 기능을 제거하거나 숨길 수 없습니다.
 - 라이선스, 저작권 또는 기타 통지(notice)를 제거하거나 숨길 수 없습니다.
 
+
 ---
 
 ### Scrapy
@@ -164,6 +164,9 @@ XPath, CSS 표현식으로 HTML 소스에서 데이터 추출이 가능하고 �
 #### 입출력데이터의 형식
 
 Scrapy는 웹 페이지에 있는 텍스트나 이미지 등 다양한 형태의 데이터들을 크롤링 할 수 있고 이 플랫폼에서는 주로 텍스트 형식의 데이터를 입출력한다.
+
+#### 라이선스 정보
+BSD License
 
 #### 특징
 
@@ -215,7 +218,8 @@ $ scrapy startproject project명
 
 크롤링해오는 데이터를 class로 받아오는 파일로 가지고 올 element를 작성한다.
 
-ex)
+item.py 작성 예시
+```
 import scrapy
 from scrapy.item import ITem, Field
 class APT2UItem(scrapy.Item):
@@ -224,7 +228,7 @@ depname=scrapy.Field() //단과대 element
 trackname=scrapy.Field() //트랙명 element
 trackcontent=scrapy.Field() //트랙의 설명 element
 
-
+```
 ##### spider.py
 
 데이터 수집 절차에 대한 수행 코드를 정의하는 파일로 해당 웹페이지에서 추출하고자 하는 정보들의 위치와 정보의 구조를 파악한다.
@@ -246,12 +250,13 @@ DB로 저장하기 위해서 크롤링의 결과를 저장할 Table을 생성해
 Scrapy 프로젝트 명 변경 ex) scrapy crawl APT2U_DB
 
 "hs" Table 생성 스크립트 예시
+```
 CREATE TABLE `hs` (
-
 `depname` varchar(200) DEFAULT NULL,
 `trackname` varchar(200) DEFAULT NULL,
 `trackcontent` varchar(500) DEFAULT NULL,
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+```
 
 #### 참고
 
@@ -396,12 +401,12 @@ Apache License 2.0
 
 #### 설명
 
-IGListKit은 빠르고 유연한 목록을 작성하기 위한 데이터 중심 UICollectionView 프레임 워크이다. 
+IGListKit은 빠르고 유연한 목록을 작성하기 위한 데이터 중심 UICollectionView 프레임 워크이다.
 IGListKit은 UICollectionView(여러 데이터를 관리하고 커스텀 할 수 있는 레이아웃을 사용해서 사용자에게 보여줄 수 있는 객체)에 표시할 개체의 배열을 제공해준다.
 
 #### 특징
 
-디핑: 가장 긴 공통 하위 시퀸스(*longest common subsequence*) 기술을 사용하여 선형 시간에서 컬렉션 간의 최소 차이를 찾는다. 이때의 시간복잡도는 O(n)이다. 데이터 배열 사이에서 모든 삽입, 삭제, 업데이트 및 이동을 찾는다. 따라서 사용자들이 좋아요를 누른 수를 실시간으로 업데이트 해줄 수 있다. 다음은 이를 구현하기 위한 코드 중 일부이다.
+디핑: 가장 긴 공통 하위 시퀸스(_longest common subsequence_) 기술을 사용하여 선형 시간에서 컬렉션 간의 최소 차이를 찾는다. 이때의 시간복잡도는 O(n)이다. 데이터 배열 사이에서 모든 삽입, 삭제, 업데이트 및 이동을 찾는다. 따라서 사용자들이 좋아요를 누른 수를 실시간으로 업데이트 해줄 수 있다. 다음은 이를 구현하기 위한 코드 중 일부이다.
 
 ```
 extension User: ListDiffable {
@@ -424,7 +429,7 @@ extension User: ListDiffable {
 
 새로운 섹션을 만들기 위해 IGListSectionController를 참조한다. 'cellForItemAtIndex:``sizeForItemAtIndex:'를 이용하여 재정의 해준다.
 
-2. UI 만들기 
+2. UI 만들기
 
 하나 이상의 섹션 컨트롤러를 생성후 IGListAdapter를 생성해준다.
 
@@ -432,7 +437,7 @@ extension User: ListDiffable {
 
 UI를 만들어 준 후 IGListAdapter의 데이터 소스 일부와 데이터를 반환해준다.
 
-4. 최상위  Post 모델 설계
+4. 최상위 Post 모델 설계
 
 ```
 final class Post: ListDiffable {
@@ -595,6 +600,7 @@ Apache License 2.0
 2차 저작물(파생결과물/Derivative Works)에 대해서는 소스를 공개하지 않아도 되지만, 이 경우에는 수정된 부분을 표시하여야 한다.**
 
 ---
+
 ### KoNLPy
 
 #### 개요
@@ -647,6 +653,7 @@ https://konlpy.org/ko/latest/# - KoNLPy: 파이썬 한국어 NLP
 https://github.com/konlpy/konlpy - 깃허브 KoNLPy 패키지
 https://datascienceschool.net/03%20machine%20learning/03.01.02%20KoNLPy%20%ED%95%9C%EA%B5%AD%EC%96%B4%20%EC%B2%98%EB%A6%AC%20%ED%8C%A8%ED%82%A4%EC%A7%80.html - 데이터 사이언스 스쿨 KoNLPy 한국어 처리 패키지
 https://github.com/open-korean-text/open-korean-text - 깃허브 Okt 태거 클래스
+
 
 ---
 
@@ -714,3 +721,4 @@ https://github.com/django/django
 광고에서의 저작권자 표기. BSD 소프트웨어를 사용 또는 포함한 것(파생물 포함)을 광고할 때에는 광고에 저작권자를 명시해야 한다.
 
 **BSD 소프트웨어는 소스 코드 공개의 의무가 없으며 상업적 이용에도 제한을 받지 않는다. 따라서 BSD를 이용하면 상용 프로그램 개발의 저작권 논쟁에서 굉장히 자유로워진다.**
+
