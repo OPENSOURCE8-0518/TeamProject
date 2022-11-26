@@ -1,4 +1,4 @@
-# 시스템 설계서
+\# 시스템 설계서
 
 ## 캠퍼스 단위 개인화 커뮤니티
 
@@ -20,6 +20,7 @@
    - IGListKit
    - Bert
    - KoNLPy
+   - Django
 4. DFD(Data-Flow-Diagram)
 
 ### Elastic Search
@@ -132,6 +133,15 @@ Datastream - 새로운 Elasticsearch 데이터 구조 이해하기 : https://you
 데이터 분석 플랫폼의 새로운 트렌드 "엘라스틱서치"(엘라스틱서치코리아 김관호 상무) : https://youtu.be/nOFB3jTnHEk
 
 깃허브 주소 : https://github.com/elastic/elasticsearch
+Elastic License 2.0 : https://www.elastic.co/kr/licensing/elastic-license/faq
+
+#### 라이센스
+Elastic License 2.0 (ELv2)
+
+Elastic License 2.0은 Elasticsearch와 Kibana의 모든 무료 및 유료 기능의 소스 코드와 Elastic의 배포에 적용됩니다. 
+- 제품을 다른 사람에게 관리형 서비스(Managed Service)로 제공할 수 없습니다. 
+- 라이선스 키 기능을 우회하거나 라이선스 키로 보호되는 기능을 제거하거나 숨길 수 없습니다.
+- 라이선스, 저작권 또는 기타 통지(notice)를 제거하거나 숨길 수 없습니다.
 
 
 ---
@@ -262,6 +272,12 @@ How to Connect Scrapy to your PostgreSQL database : https://nicolas-bourriez.med
 
 대용량 데이터를 수집하기 위한 생산성있는 웹 크롤러의 구조 : https://exmemory.tistory.com/81
 
+#### 라이센스
+- BSD (Berkeley Software Distribution) 
+
+**BSD 소프트웨어는 소스 코드 공개의 의무가 없으며 상업적 이용에도 제한을 받지 않는다. 따라서 BSD를 이용하면 상용 프로그램 개발의 저작권 논쟁에서 굉장히 자유로워진다.**
+
+
 ---
 
 ### LTR
@@ -373,6 +389,12 @@ http://4four.us/article/2009/10/what-is-learning-to-rank
 
 https://elasticsearch-learning-to-rank.readthedocs.io/en/latest/logging-features.html
 
+####라이센스
+Apache License 2.0
+**아파치 라이센스의 경우 원저작물을 어떠한 방식으로든 사용할 수 있다.
+2차 저작물(파생결과물/Derivative Works)에 대해서는 소스를 공개하지 않아도 되지만, 이 경우에는 수정된 부분을 표시하여야 한다.**
+
+
 ---
 
 ### IGListKit
@@ -455,6 +477,9 @@ diffing : https://instagram-engineering.com/open-sourcing-iglistkit-3d66f1e4e9aa
 
 IGListKit구조 : https://leejigun.github.io/IGListKit
 
+####라이센스
+MIT License
+**소스코드 공개 필요 X, 동일한 라이센스 적용 X, 상업적 이용 O**
 
 ---
 
@@ -569,6 +594,11 @@ Bert-as-service 자료 : https://blog.naver.com/dmswldla91/222167659381 , https:
 
 [Github]-bert-as-service / README.md : https://github.com/hansonrobotics/bert-as-service/blob/master/README.md
 
+####라이센스
+Apache License 2.0
+**아파치 라이센스의 경우 원저작물을 어떠한 방식으로든 사용할 수 있다.
+2차 저작물(파생결과물/Derivative Works)에 대해서는 소스를 공개하지 않아도 되지만, 이 경우에는 수정된 부분을 표시하여야 한다.**
+
 ---
 
 ### KoNLPy
@@ -624,4 +654,71 @@ https://github.com/konlpy/konlpy - 깃허브 KoNLPy 패키지
 https://datascienceschool.net/03%20machine%20learning/03.01.02%20KoNLPy%20%ED%95%9C%EA%B5%AD%EC%96%B4%20%EC%B2%98%EB%A6%AC%20%ED%8C%A8%ED%82%A4%EC%A7%80.html - 데이터 사이언스 스쿨 KoNLPy 한국어 처리 패키지
 https://github.com/open-korean-text/open-korean-text - 깃허브 Okt 태거 클래스
 
+
+---
+
+### Django
+
+#### 개요
+Django는 파이썬으로 만들어진 무료 오픈소스 웹 애플리케이션 프레임워크(web application framework)이다.
+쉽고 빠르게 웹사이트를 개발할 수 있도록 돕고, 고도의 데이터베이스 기반 웹사이트를 작성하는 데 있어서 수고를 더는 것이 장고의 주된 목표이다. 
+
+장고는 콤포넌트의 재사용성(reusability)과 플러그인화 가능성(pluggability), 빠른 개발 등을 강조하고 있다. 또한, "DRY(Don't repeat yourself: 중복배제)" 원리를 따랐다. 설정 파일부터 데이터 모델에까지 파이썬 언어가 구석구석에 쓰였다.
+
+Django는 인스타그램, NASA, 빗버킷, Disqus, 모질라에서 장고를 사용하는 것으로 알려져있으며 아파치 HTTP 서버에 mod wsgi 또는 mod python 모듈을 설치하여 서비스할 수 있다.
+
+
+#### 특징
+장고는 웹 개발에서 번거로운 요소들을 새로 개발할 필요 없이 내장된 기능만을 이용해 빠른 개발을 할 수 있다는 장점이 있다.
+
+- ###### 구성
+    장고는 파이썬으로 코딩한 모델을 관계형 데이터베이스로 구축해주는 모델(Model), HTTP 요청을 처리하는 웹 템플릿 시스템인 뷰(View), URL의 라우팅을 처리하는 URL 컨트롤러 (Controller) 로 구성된 MVC 디자인 패턴을 따른다.
+    하지만 전통적인 MVC 디자인 패턴에서 이야기하는 컨트롤러의 기능을 프레임워크를 자체에서 하기 때문에 모델(Model), 템플릿(Template), 뷰(View)로 분류해 MTV 프레임워크라고 보기도 한다.
+
+- ###### 모델
+    모델은 데이터에 관한 정보를 담는다. 데이터에 대한 접근, 검증, 작동과 데이터 사이의 관계를 정의하는데, 일반적으로 각각의 모델은 데이터베이스에서 테이블에 해당한다.
+    장고에서는 모델을 정의할 때 필드의 종류를 지정해줘야 하는데, 이것이 데이터베이스에게 컬럼 타입을 알려주고 HTML 폼으로 표시 될 때의 입력 타입도 내포하는 역할을 한다. 또한 장고의 폼 자동 생성 API를 이용할 때 데이터 검증에 쓰이기도 한다.
+
+- ###### 뷰
+    어떤 데이터가 표시될 것인지를 정의한다. 뷰는 HTTP 응답(response)를 반환해야 하며 응답의 종류는 웹 페이지, 리디렉션, 문서 등의 다양한 형태가 가능하다.
+    장고에는 자주 사용되는 형태의 뷰를 패턴화하여 추상화 해둔 재사용 가능한 뷰들을 내장해 놓았는데, 이들을 제네릭 뷰(generic view) 라고 하며 원하는 제네릭 뷰를 상속한 클래스 뷰를 생성하여 사용할 수 있다.
+
+- ###### 템플릿
+    데이터가 어떻게 표시되는 지를 정의한다. 템플릿은 사용자에게 실제로 보여지는 웹 페이지나 문서를 다룬다.
+    흔히 HTML 에 기반해서 템플릿을 만들며, HTML 에 동적인 요소를 추가하기 위해 파이썬의 일부 기능을 쓰게 도와주는 장고 템플릿 태그가 존재한다.
+
+- ###### 내장 애플리케이션
+    장고에는 아래와 같은 웹 개발에서 자주 쓰이는 애플리케이션이 'contrib' 패키지에 내장되어있다.
+    - 확장가능한 사용자 인증 시스템
+    - 동적 관리자 인터페이스
+    - RSS 또는 아톰을 위한 피드 생성
+    - 사이트맵 생성
+    - 사이트 간 요청 위조(CSRF), 사이트 간 스크립팅(XSS), SQL 인젝션과 같은 해킹 시도에 대한     보안 대책
+
+- ###### 외부 패키지
+    내장된 요소들 중에 원하는 것이 없으면 장고를 위해 개발된 외부 패키지를 이용할 수도 있다. 장고에서 사용할 수 있는 패키지들을 모아놓은 웹사이트 Django Packages의 경우에는 3600개가 넘는 패키지가 등록되어있는 것을 알 수 있으며, 커뮤니티 멤버들의 꾸준한 기여 덕분에 많은 양질의 패키지들이 개발되고 있다. 
+    이는 파이썬의 "건전지 포함"(Batteries Included)의 정신에 입각한 것으로 볼 수도 있다.
+
+#### 참조
+
+###### 위키피디아 - Django (웹 프레임워크) 문서
+https://ko.wikipedia.org/wiki/%EC%9E%A5%EA%B3%A0_(%EC%9B%B9_%ED%94%84%EB%A0%88%EC%9E%84%EC%9B%8C%ED%81%AC)#cite_note-14
+
+###### 깃허브 Django 주소
+https://github.com/django/django
+
+#### 라이센스
+- BSD (Berkeley Software Distribution) 
+
+다음과 같은 사항을 요구하며 이를 준수하는 경우 개작/배포에 아무런 제한을 받지 않는다.
+저작권자 표기. BSD 라이선스가 걸린 소프트웨어를 이용하는 경우, 해당 저작권자의 이름과 BSD 라이선스의 내용을 같이 배포해야 한다.
+보증 부인. BSD 라이선스가 걸린 소프트웨어로 인하여 법률상/도의상 피해가 발생하더라도, 그 책임을 저작권자에게 물을 수 없다.
+
+3조항(3-clause) 이상 라이선스를 사용하는 경우 다음 항목이 추가된다.
+저작권자의 이름을 광고에 사용 금지. 별도의 서면 허락 없이 BSD 소프트웨어를 개발한 단체 또는 개인의 이름을 BSD 소프트웨어 또는 그 파생물의 추천 및 판촉 광고에 사용할 수 없다.
+
+4조항(4-clause) 라이선스를 사용하는 경우 다음 항목이 추가된다.
+광고에서의 저작권자 표기. BSD 소프트웨어를 사용 또는 포함한 것(파생물 포함)을 광고할 때에는 광고에 저작권자를 명시해야 한다.
+
+**BSD 소프트웨어는 소스 코드 공개의 의무가 없으며 상업적 이용에도 제한을 받지 않는다. 따라서 BSD를 이용하면 상용 프로그램 개발의 저작권 논쟁에서 굉장히 자유로워진다.**
 
